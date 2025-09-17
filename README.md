@@ -66,7 +66,7 @@ The analysis reveals distinct adoption trends for each protocol, heavily influen
 - **Stealth Addresses (BIP47):** Despite a targeted heuristic, no transactions were detected, indicating negligible adoption of the standardized BIP47 protocol and suggesting a pivot towards more opaque privacy technologies.
 - **General Trend:** A significant portion of initially detected "privacy" activity was later attributed to **false positives** from non-financial data embedding (e.g., Ordinals inscriptions), highlighting the methodological challenges of on-chain privacy research.
 
-## 📮 Contact
+## Contact
 
 For questions regarding this research, please open an Issue on this repository.
 
