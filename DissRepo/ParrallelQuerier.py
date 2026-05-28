@@ -164,34 +164,6 @@ class BlockchainAnalyzer:
 
 
     # ---- OPTIMIZED HEURISTIC QUERIES ----
-    NEW_COINSWAP_QUERY_OPTIMIZED = """
-    WITH filtered_transactions AS (
-        SELECT DISTINCT t.txid
-        FROM tx_with_blocks t
-        WHERE t.height BETWEEN {start_block} AND {end_block}
-        AND NOT EXISTS (
-            SELECT 1 FROM tx_outputs_detailed to2 
-            WHERE to2.txid = t.txid AND to2.scriptPubKey LIKE '%OP_RETURN%'
-        )
-    ),
-    transaction_stats AS (
-        SELECT 
-            t.txid,
-            COUNT(DISTINCT ti.prev_address) as unique_prev_addresses,
-            COUNT(DISTINCT to_out.address) as unique_output_addresses,
-            STDDEV(to_out.tValue) / AVG(to_out.tValue) as value_variation,
-            MAX(to_out.tValue) - MIN(to_out.tValue) as value_range
-        FROM filtered_transactions t
-        JOIN tx_inputs_detailed ti ON t.txid = ti.txid
-        JOIN tx_outputs_detailed to_out ON t.txid = to_out.txid
-        GROUP BY t.txid
-        HAVING unique_prev_addresses >= 2
-        AND unique_output_addresses >= 2
-        AND value_variation < 0.15
-        AND value_range <= 200000
-    )
-    SELECT COUNT(DISTINCT txid) FROM transaction_stats
-    """
 
     COINJOIN_QUERY_OPTIMIZED = """
     WITH transaction_stats AS (
