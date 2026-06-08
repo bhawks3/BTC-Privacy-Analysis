@@ -55,9 +55,11 @@ The SQL heuristics implement the following criteria to identify potential privac
     ```
 4.  Run the main analysis script:
     ```bash
-    python src/analysis.py
+    python BTCRepo/ParrallelQuerier.py
+    python BTCRepo/CoinSwapQuerier.py
     ```
-    This script will execute the SQL queries, aggregate the results, and generate the time-series plots.
+    This script will execute the SQL queries and aggregate the results.
+    
 
 ## Key Findings
 
