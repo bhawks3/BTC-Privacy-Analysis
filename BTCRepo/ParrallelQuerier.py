@@ -8,7 +8,7 @@ import concurrent.futures
 class BlockchainAnalyzer:
     def __init__(self, db_path: str):
         """
-        Initialize the analyzer with path to DuckDB database
+        Initialise the analyzer with path to DuckDB database
         """
         self.conn = duckdb.connect(db_path)
         self.block_stats = []  # Store block period statistics
@@ -70,7 +70,7 @@ class BlockchainAnalyzer:
 
     def run_heuristic(self, heuristic_name: str, heuristic_query_template: str) -> Dict[str, Any]:
         """
-        PHASE 2: Run a specific heuristic on pre-collected block statistics
+        PHASE 2: Run specific heuristic on pre-collected block statistics
         """
         if not self.block_stats:
             self.collect_block_statistics()
@@ -122,7 +122,6 @@ class BlockchainAnalyzer:
         return self.heuristic_results[heuristic_name]
 
     def create_optimized_queries(self):
-        """Create optimized versions of all heuristic queries using only existing columns"""
     
         # Enable parallel processing
         self.conn.execute("SET threads TO 64;")
@@ -277,19 +276,6 @@ class BlockchainAnalyzer:
         
         return results
 
-    def run_coinswap_heuristic_optimized(self, parallel: bool = True, max_workers: int = 32):
-        """Run optimized coinswap heuristic"""
-        if parallel:
-            results = self.run_heuristic_parallel(self.NEW_COINSWAP_QUERY_OPTIMIZED, max_workers=max_workers)
-            self.heuristic_results["coinswap_optimized"] = {
-                'period_results': results,
-                'total_heuristic_count': sum(r['heuristic_count'] for r in results),
-                'total_transactions': sum(r['total_transactions'] for r in results)
-            }
-            return self.heuristic_results["coinswap_optimized"]
-        else:
-            return self.run_heuristic("coinswap_optimized", self.NEW_COINSWAP_QUERY_OPTIMIZED)
-
     def run_coinjoin_optimized(self, parallel: bool = True, max_workers: int = 32):
         """Run optimized coinjoin heuristic"""
         if parallel:
@@ -389,10 +375,6 @@ if __name__ == "__main__":
         # Run heuristics in parallel
         print("\n" + "="*50)
         print("Running optimized heuristics in parallel...")
-        
-        # Run with parallel processing (adjust max_workers based on your cluster)
-        coinswap_results = analyzer.run_coinswap_heuristic_optimized(parallel=True, max_workers=64)
-        analyzer.export_heuristic_results("coinswap_optimized")
         
         coinjoin_results = analyzer.run_coinjoin_optimized(parallel=True, max_workers=64)
         analyzer.export_heuristic_results("coinjoin_optimized")
