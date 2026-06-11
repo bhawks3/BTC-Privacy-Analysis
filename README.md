@@ -55,8 +55,8 @@ The SQL heuristics implement the following criteria to identify potential privac
     ```
 4.  Run the main analysis script:
     ```bash
-    python BTCRepo/ParrallelQuerier.py --CoinJoin, CoinShuffle, StealthAddresses
-    python BTCRepo/CoinSwapQuerier.py --CoinSwap
+    python BTCRepo/ParrallelQuerier.py
+    python BTCRepo/CoinSwapQuerier.py
     ```
     This script will execute the SQL queries and aggregate the results.
     
