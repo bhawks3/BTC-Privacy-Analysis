@@ -1,6 +1,6 @@
 # Bitcoin Privacy-Preserving Protocol Analysis
 
-This repository contains the code and data pipeline for **"An Empirical Analysis of the Adoption and Decline of Privacy-Preserving Protocols on the Bitcoin Blockchain"**.
+This repository contains the code and data pipeline for **"No Country for Old Privacy: The Evolving Challenges of Anonymity in Bitcoin"**.
 
 The study measures the prevalence of key privacy-enhancing technologies (PETs)—namely **CoinJoin, CoinSwap, CoinShuffle, and Stealth Addresses (BIP47)**—over a longitudinal period from block 400,000 (June 2016) to block 900,000 (est. June 2025). It investigates correlations between adoption trends and significant real-world events.
 
