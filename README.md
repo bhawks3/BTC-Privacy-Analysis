@@ -45,7 +45,7 @@ The SQL heuristics implement the following criteria to identify potential privac
 ### Running the Analysis
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/<your-username>/BTC-Privacy-Analysis.git
+    git clone https://github.com/ANONYMISED/BTC-Privacy-Analysis.git
     cd BTC-Privacy-Analysis
     ```
 2.  Ensure your DuckDB database (`bitcoin.db`) is in the correct location.
