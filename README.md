@@ -1,6 +1,6 @@
 # Bitcoin Privacy-Preserving Protocol Analysis
 
-This repository contains the code and data pipeline for the Master's thesis **"An Empirical Analysis of the Adoption and Decline of Privacy-Preserving Protocols on the Bitcoin Blockchain"**.
+This repository contains the code and data pipeline for **"An Empirical Analysis of the Adoption and Decline of Privacy-Preserving Protocols on the Bitcoin Blockchain"**.
 
 The study measures the prevalence of key privacy-enhancing technologies (PETs)—namely **CoinJoin, CoinSwap, CoinShuffle, and Stealth Addresses (BIP47)**—over a longitudinal period from block 400,000 (June 2016) to block 900,000 (est. June 2025). It investigates correlations between adoption trends and significant real-world events.
 
@@ -9,7 +9,7 @@ The study measures the prevalence of key privacy-enhancing technologies (PETs)�
 The research follows a structured data pipeline:
 
 1.  **Data Collection:** A full Bitcoin Core node was used to obtain a raw, validated copy of the blockchain.
-2.  **Data Parsing:** The `rusty-blockparser` tool was used to parse `.dat` files into structured CSV files (`blocks`, `transactions`, `inputs`, `outputs`).
+2.  **Data Parsing:** The `rusty-blockparser` tool was used to parse `.dat` files into structured CSV files (`blocks`, `transactions`, `tx_in`, `tx_out`).
 3.  **Database Construction:** CSV files were imported into a **DuckDB** database for efficient analytical querying. The schema was pruned to essential columns to optimize storage and performance (see table below).
 4.  **Heuristic Querying:** A series of SQL queries, based on established academic literature (Möser & Böhme), were executed to detect transactions matching the patterns of each privacy protocol.
 5.  **Analysis & Visualization:** Detected transactions were aggregated over 1008-block periods, normalized against total transaction volume, and plotted as a time series. Significant external events were annotated to contextualize trends.
@@ -29,7 +29,7 @@ The SQL heuristics implement the following criteria to identify potential privac
 | Protocol | Key Detection Criteria |
 | :--- | :--- |
 | **CoinJoin** | `# inputs >= # outputs / 2` and `# outputs >= 4` |
-| **CoinSwap** | 2-of-2 multisig, no graph connection, value variation < 15%, no `OP_RETURN` |
+| **CoinSwap** | 2-of-2 multisig, no self-funding, value variation < 0.0002,  `OP_CHECKMULTISIG` (or equivalent hex) present |
 | **CoinShuffle** | `# inputs == # outputs >= 3`, near-identical output values (`variation < 0.0001`) |
 | **Stealth Addresses (BIP47)** | Exact `OP_RETURN` payload matching `'6a26%'` (BIP47) |
 
@@ -51,12 +51,12 @@ The SQL heuristics implement the following criteria to identify potential privac
 2.  Ensure your DuckDB database (`bitcoin.db`) is in the correct location.
 3.  Install Python dependencies:
     ```bash
-    pip install duckdb pandas
+    pip install duckdb argparse csv os
     ```
 4.  Run the main analysis script:
     ```bash
-    python BTCRepo/ParrallelQuerier.py
-    python BTCRepo/CoinSwapQuerier.py
+    python BTCRepo/ParrallelQuerier.py --CoinJoin, CoinShuffle, StealthAddresses
+    python BTCRepo/CoinSwapQuerier.py --CoinSwap
     ```
     This script will execute the SQL queries and aggregate the results.
     
