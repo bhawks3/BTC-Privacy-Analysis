@@ -25,17 +25,7 @@ class CoinSwapEstimator:
         end_block: int,
         lookahead: int = 30,
     ) -> Dict[str, int]:
-        """
-        Count candidate CoinSwap outputs in a block range.
 
-        Heuristic:
-          1. Select 2-of-2 multisig outputs created in the period.
-          2. Keep only those spent within 30 blocks after creation.
-          3. Prune transactions containing 3 or more such outputs.
-          4. Count outputs in the pruned set that have another pruned output
-             within the next 30 blocks. AND within 20000 satoshis
-  
-        """
         sql = f"""
             WITH candidate_outputs AS (
                 SELECT
