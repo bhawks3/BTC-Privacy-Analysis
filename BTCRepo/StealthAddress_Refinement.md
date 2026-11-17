@@ -13,22 +13,22 @@ OR to_out.scriptPubKey LIKE ’%03030303%’
 );
 
 ## Iteration 2
-WHERE ... AND (
-(to_out.scriptPubKey LIKE ’%OP_RETURN%’ AND LENGTH(to_out
-.scriptPubKey) BETWEEN 50 AND 150)
-OR to_out.scriptPubKey LIKE ’%02%’
-OR to_out.scriptPubKey LIKE ’%03%’
-OR to_out.scriptPubKey LIKE ’%OP_RETURN%’
-OR ( NOT ( ...standard script patterns... ) AND LENGTH(
-to_out.scriptPubKey) > 40 )
+WHERE ... AND (  
+(to_out.scriptPubKey LIKE ’%OP_RETURN%’ AND LENGTH(to_out  
+.scriptPubKey) BETWEEN 50 AND 150)  
+OR to_out.scriptPubKey LIKE ’%02%’  
+OR to_out.scriptPubKey LIKE ’%03%’  
+OR to_out.scriptPubKey LIKE ’%OP_RETURN%’  
+OR ( NOT ( ...standard script patterns... ) AND LENGTH(  
+to_out.scriptPubKey) > 40 )  
 )
 
 ## Iteration 3
-WHERE ... AND ( 
-(to_out.scriptPubKey LIKE ’6a26%’ AND LENGTH(to_out.
-scriptPubKey) = 70) 
-OR
-(to_out.scriptPubKey LIKE ’21%’ AND (to_out.scriptPubKey
-LIKE ’2102%’ OR to_out.scriptPubKey LIKE ’2103%’)
-AND LENGTH(to_out.scriptPubKey) = 68)
+WHERE ... AND (   
+(to_out.scriptPubKey LIKE ’6a26%’ AND LENGTH(to_out.  
+scriptPubKey) = 70)   
+OR  
+(to_out.scriptPubKey LIKE ’21%’ AND (to_out.scriptPubKey  
+LIKE ’2102%’ OR to_out.scriptPubKey LIKE ’2103%’)  
+AND LENGTH(to_out.scriptPubKey) = 68)  
 )
