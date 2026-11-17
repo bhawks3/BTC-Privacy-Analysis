@@ -69,9 +69,6 @@ class BlockchainAnalyzer:
         return self.block_stats
 
     def run_heuristic(self, heuristic_name: str, heuristic_query_template: str) -> Dict[str, Any]:
-        """
-        PHASE 2: Run specific heuristic on pre-collected block statistics
-        """
         if not self.block_stats:
             self.collect_block_statistics()
 
@@ -127,10 +124,7 @@ class BlockchainAnalyzer:
         self.conn.execute("SET threads TO 64;")
         self.conn.execute("SET enable_progress_bar=true;")
 
-        # Create optimized materialized views for common joins
-        print("Creating optimized materialized views...")
-
-        # View for transaction details with block information (only using existing columns)
+        # View for transaction details with block information
         self.conn.execute("""
             CREATE OR REPLACE VIEW tx_with_blocks AS
             SELECT 
@@ -140,7 +134,7 @@ class BlockchainAnalyzer:
             JOIN blocks b ON t.hashBlock = b.block_hash
         """)
 
-        # View for transaction inputs with previous output details (only using existing columns)
+        # View for transaction inputs with previous output details
         self.conn.execute("""
             CREATE OR REPLACE VIEW tx_inputs_detailed AS
             SELECT 
@@ -151,7 +145,7 @@ class BlockchainAnalyzer:
             JOIN tx_out prev_out ON ti.hashPrev = prev_out.txid AND ti.indexPrev = prev_out.indexOut
         """)
 
-        # View for transaction outputs (only using existing columns)
+        # View for transaction outputs
         self.conn.execute("""
             CREATE OR REPLACE VIEW tx_outputs_detailed AS
             SELECT 
@@ -159,7 +153,7 @@ class BlockchainAnalyzer:
             FROM tx_out
         """)
 
-        print("Materialized views created successfully!")
+        print("Materialized views created")
 
 
     # ---- OPTIMIZED HEURISTIC QUERIES ----
