@@ -29,7 +29,7 @@ The SQL heuristics implement the following criteria to identify potential privac
 | Protocol | Key Detection Criteria |
 | :--- | :--- |
 | **CoinJoin** | `# inputs >= # outputs / 2` and `# outputs >= 4` |
-| **CoinSwap** | 2-of-2 multisig, no self-funding, value variation < 0.0002,  `OP_CHECKMULTISIG` (or equivalent hex) present |
+| **CoinSwap** | 2-of-2 multisig, value variation < 0.0002, spent within 30 blocks of creation,  `OP_CHECKMULTISIG` (or equivalent hex) present |
 | **CoinShuffle** | `# inputs == # outputs >= 3`, near-identical output values (`variation < 0.0001`) |
 | **Stealth Addresses (BIP47)** | Exact `OP_RETURN` payload matching `'6a26%'` (BIP47) |
 
