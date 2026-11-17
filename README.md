@@ -33,7 +33,7 @@ The SQL heuristics implement the following criteria to identify potential privac
 | **CoinShuffle** | `# inputs == # outputs >= 3`, near-identical output values (`variation < 0.0001`) |
 | **Stealth Addresses (BIP47)** | Exact `OP_RETURN` payload matching `'6a26%'` (BIP47) |
 
-*Note: The Stealth Address heuristic underwent three iterations to balance precision and recall, moving from broad pattern matching to a precise BIP47-specific filter.*
+*Note: The Stealth Address heuristic underwent three iterations to balance precision and recall, moving from broad pattern matching to a precise BIP47-specific filter. `StealthAddress_Heuristic2.csv` in `Results/` are the results from iteration 2, and  `StealthAddress_Heuristic3(BIP47).csv` are results from the final iteration (mentioned in the table above)*
 
 ## Usage
 
